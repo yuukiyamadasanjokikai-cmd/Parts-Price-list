@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>価格表</title>
+</head>
+<body>
+
+<h1>価格表</h1>
+
+<table border="1" id="priceTable">
+</table>
+
+<script>
+const sheetURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSlS2WKtL7_oe73zUL0qyJKKiDaVnZOnx58Gls6ZgL4_1nzp612stMPxEqYxlA1m9gG_161172X2F-s/pubhtml";
+
+fetch(sheetURL)
+  .then(response => response.text())
+  .then(data => {
+    const rows = data.split("\n");
+    const table = document.getElementById("priceTable");
+
+    rows.forEach((row, index) => {
+      const tr = document.createElement("tr");
+      const cols = row.split(",");
+
+      cols.forEach(col => {
+        const cell = document.createElement(index === 0 ? "th" : "td");
+        cell.textContent = col;
+        tr.appendChild(cell);
+      });
+
+      table.appendChild(tr);
+    });
+  });
+</script>
+
+</body>
+</html>
